@@ -1,3 +1,3 @@
-export const initialState = {
-  contacts: { contacts: [], filter: '' },
-};
+export const initialState = 
+  { contacts: [], filter: '', }
+;

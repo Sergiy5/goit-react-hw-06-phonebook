@@ -1,22 +1,21 @@
-import { configureStore } from '@reduxjs/toolkit';
-
-import {persistReducer, persistStore} from 'redux-persist' 
+import {configureStore} from '@reduxjs/toolkit';
+import {persistReducer, persistStore} from 'redux-persist'; 
 import storage from 'redux-persist/lib/storage'
-import { reducer } from './reducer';
+import { rootReducer } from './reducer';
 
 const persistConfig = {
-  key: 'contacts',
-    storage,
-}
+  key: 'phoneBook',
+  storage,
+};
 
-export const persistedReducer = persistReducer(persistConfig, reducer);
-console.log('1', persistedReducer);
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
 export const store = configureStore({
- reducer: persistedReducer,
+  reducer: persistedReducer,
+
 });
 export const persistor = persistStore(store) 
 
-// import { createAction, createReducer } from '@reduxjs/toolkit';
 
 // export const addContact = createAction('contacts/addContact');
 // export const deleteContact = createAction('contacts/deleteContact');

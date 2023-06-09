@@ -1,13 +1,12 @@
-import { deleteContact } from 'components/Redux/Contacts/contactsReducer';
 import { useDispatch, useSelector } from 'react-redux';
+import { deleteContact } from 'components/Redux/Contacts/contactsReducer';
 import { Item, Button, Paragraf } from './contacts.styled';
 
-const ContactsList = ({ onDeleteContact }) => {
+const ContactsList = () => {
   const contacts = useSelector(state => state.contacts);
-    const dataFilter = useSelector(state => state.filter);
+  const dataFilter = useSelector(state => state.filter);
   const dispatch = useDispatch();
     
-
   const onFilteredContacts = () => {
     if (dataFilter) {
       const normalisedContacts = dataFilter.toLowerCase();
@@ -17,7 +16,7 @@ const ContactsList = ({ onDeleteContact }) => {
     }
     return contacts;
   };
-
+  
   const filteredContacts = onFilteredContacts();
     
   return (
@@ -27,10 +26,7 @@ const ContactsList = ({ onDeleteContact }) => {
           <Paragraf>
             {name}: {number}
           </Paragraf>
-          <Button
-            type="button"
-            onClick={() => dispatch(deleteContact(id))}
-          >
+          <Button type="button" onClick={() => dispatch(deleteContact(id))}>
             DELETE
           </Button>
         </Item>
