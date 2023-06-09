@@ -8,27 +8,29 @@ const contactsState = state => state.contacts;
 
 
 const Form = ()=> {
-  const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
+  const [contact, setContact] = useState({
+    name: '',
+    number: '',
+  });
+ 
   const contacts = useSelector(contactsState);
   const dispatch = useDispatch();
 
   const handleChange = ({ target }) => {
-    if (target.name === 'name') {
-      setName(target.value);
-    }
-    if (target.name === 'number') {
-      setNumber(target.value);
-    }
+    console.log(target.value)
+    setContact(prev => ({ ...prev, [target.name]: target.value }));
+   
   };
-
+console.log('contact', contact)
   const isContactExsist = newName => {
+    console.log(newName);
     if (contacts.length) {
       return contacts.find(({ name }) => name === newName);
     }
   };
 
   const addNewContact = newContact => {
+    console.log(newContact);
     isContactExsist(newContact.name)
       ? alert(`${newContact.name} is already in contacts`)
       : dispatch(addContact(newContact));
@@ -37,9 +39,9 @@ const Form = ()=> {
   const handleSubmit = e => {
     e.preventDefault();
     const id = nanoid(5);
-    addNewContact({ id, name, number });
-   setName('')
-   setNumber('')
+    const {name, number} = contact
+    addNewContact({ id, name, number  });
+   setContact({name:'', number:''});
   };
 
   return (
@@ -55,7 +57,7 @@ const Form = ()=> {
           // title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
           required
           onChange={handleChange}
-          value={name}
+          value={contact.name}
         />
         <Label htmlFor="numberInput" className="lableInputNumber">
           Number
@@ -67,7 +69,7 @@ const Form = ()=> {
           // title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
           onChange={handleChange}
-          value={number}
+          value={contact.number}
         />
         <BtnSubmit type="submit" className="btnSubmit">
           Add contact
